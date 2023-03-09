@@ -5,8 +5,18 @@ import classes from "./App.module.css";
 function App() {
   const [enteredNumber, setEnteredNumber] = useState("0");
   const [displayNumber, setDisplayNumber] = useState("0");
+  const [numberLimitCount, setNumberLimitCount] = useState(0);
 
   const numberHandler = event => {
+    // const newEnteredNumber = Number(enteredNumber + event.target.innerText);
+    if (enteredNumber === "0" && event.target.innerText === "0") return;
+    if (numberLimitCount === 9) return;
+    setNumberLimitCount(prevCount => prevCount + 1);
+    if (enteredNumber.includes(".")) {
+      setEnteredNumber((enteredNumber + event.target.innerText).toString());
+      setDisplayNumber(displayNumber + event.target.innerText);
+      return;
+    }
     const newEnteredNumber = Number(enteredNumber + event.target.innerText);
     setEnteredNumber(newEnteredNumber.toString());
     setDisplayNumber(newEnteredNumber.toLocaleString());
@@ -15,6 +25,7 @@ function App() {
   const clearHandler = () => {
     setEnteredNumber("0");
     setDisplayNumber("0");
+    setNumberLimitCount(0);
   };
 
   const toggleSignHandler = () => {
@@ -27,6 +38,19 @@ function App() {
     setEnteredNumber(convertNumber.toString());
     setDisplayNumber(convertNumber.toLocaleString());
   };
+
+  const dotHandler = event => {
+    if (enteredNumber.includes(".")) return;
+    const newEnteredNumber = enteredNumber + ".";
+    const newDisplayNumber = displayNumber + ".";
+    setEnteredNumber(newEnteredNumber.toString());
+    setDisplayNumber(newDisplayNumber.toString());
+  };
+
+  // const displayNumber = Number(enteredNumber).toLocaleString(undefined, {
+  //   maximumFractionDigits: 8,
+  // });
+  console.log(enteredNumber);
   return (
     <div className={classes.App}>
       <div className={classes["calc-container"]}>
@@ -52,7 +76,7 @@ function App() {
           <button onClick={numberHandler}>3</button>
           <button>+</button>
           <button onClick={numberHandler}>0</button>
-          <button>.</button>
+          <button onClick={dotHandler}>.</button>
           <button>=</button>
         </div>
       </div>
