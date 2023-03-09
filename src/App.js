@@ -19,10 +19,14 @@ function App() {
 
   const toggleSignHandler = () => {
     const convertNumber = -Number(enteredNumber);
+    if (convertNumber === 0) {
+      setEnteredNumber(convertNumber.toLocaleString());
+      setDisplayNumber(convertNumber.toLocaleString());
+      return;
+    }
     setEnteredNumber(convertNumber.toString());
     setDisplayNumber(convertNumber.toLocaleString());
   };
-
   return (
     <div className={classes.App}>
       <div className={classes["calc-container"]}>
