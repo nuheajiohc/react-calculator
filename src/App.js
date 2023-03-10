@@ -8,7 +8,7 @@ function App() {
 
   const numberHandler = event => {
     if (enteredNumber === "0" && event.target.innerText === "0") return;
-    if (enteredNumber.replace(".", "").length === 9) return;
+    if (enteredNumber.replace(/[-.]/g, "").length === 9) return;
     if (enteredNumber.includes(".")) {
       setEnteredNumber((enteredNumber + event.target.innerText).toString());
       setDisplayNumber(displayNumber + event.target.innerText);
