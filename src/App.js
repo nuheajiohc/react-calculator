@@ -38,6 +38,7 @@ function App() {
 
   const dotHandler = event => {
     if (enteredNumber.includes(".")) return;
+    if (enteredNumber.replace("-", "").length === 9) return;
     const newEnteredNumber = enteredNumber + ".";
     const newDisplayNumber = displayNumber + ".";
     setEnteredNumber(newEnteredNumber.toString());
