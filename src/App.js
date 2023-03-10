@@ -5,22 +5,16 @@ import classes from "./App.module.css";
 function App() {
   const [enteredNumber, setEnteredNumber] = useState("0");
   const [displayNumber, setDisplayNumber] = useState("0");
-  const [numberLimitCount, setNumberLimitCount] = useState(0);
 
   const numberHandler = event => {
-    // const newEnteredNumber = Number(enteredNumber + event.target.innerText);
     if (enteredNumber === "0" && event.target.innerText === "0") return;
-    if (numberLimitCount === 9) return;
+    if (enteredNumber.replace(".", "").length === 9) return;
     if (enteredNumber.includes(".")) {
-      setNumberLimitCount(prevCount => prevCount + 1);
-      console.log(numberLimitCount);
       setEnteredNumber((enteredNumber + event.target.innerText).toString());
       setDisplayNumber(displayNumber + event.target.innerText);
       return;
     }
 
-    setNumberLimitCount(prevCount => prevCount + 1);
-    console.log(numberLimitCount);
     const newEnteredNumber = Number(enteredNumber + event.target.innerText);
     setEnteredNumber(newEnteredNumber.toString());
     setDisplayNumber(newEnteredNumber.toLocaleString());
@@ -29,7 +23,6 @@ function App() {
   const clearHandler = () => {
     setEnteredNumber("0");
     setDisplayNumber("0");
-    setNumberLimitCount(0);
   };
 
   const toggleSignHandler = () => {
@@ -51,9 +44,6 @@ function App() {
     setDisplayNumber(newDisplayNumber.toString());
   };
 
-  // const displayNumber = Number(enteredNumber).toLocaleString(undefined, {
-  //   maximumFractionDigits: 8,
-  // });
   return (
     <div className={classes.App}>
       <div className={classes["calc-container"]}>
