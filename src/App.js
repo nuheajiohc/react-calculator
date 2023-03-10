@@ -4,58 +4,58 @@ import classes from "./App.module.css";
 
 function App() {
   const [enteredNumber, setEnteredNumber] = useState("0");
-  const [displayNumber, setDisplayNumber] = useState("0");
 
   const numberHandler = event => {
     if (enteredNumber === "0" && event.target.innerText === "0") return;
     if (enteredNumber.replace(/[-.]/g, "").length === 9) return;
     if (enteredNumber.includes(".")) {
       setEnteredNumber((enteredNumber + event.target.innerText).toString());
-      setDisplayNumber(displayNumber + event.target.innerText);
       return;
     }
 
     const newEnteredNumber = Number(enteredNumber + event.target.innerText);
     setEnteredNumber(newEnteredNumber.toString());
-    setDisplayNumber(newEnteredNumber.toLocaleString());
   };
 
   const clearHandler = () => {
     setEnteredNumber("0");
-    setDisplayNumber("0");
   };
 
   const toggleSignHandler = () => {
     const convertNumber = -Number(enteredNumber);
     if (convertNumber === 0) {
       setEnteredNumber(convertNumber.toLocaleString());
-      setDisplayNumber(convertNumber.toLocaleString());
       return;
     }
     setEnteredNumber(convertNumber.toString());
-    setDisplayNumber(convertNumber.toLocaleString());
   };
 
   const dotHandler = event => {
     if (enteredNumber.includes(".")) return;
     if (enteredNumber.replace("-", "").length === 9) return;
     const newEnteredNumber = enteredNumber + ".";
-    const newDisplayNumber = displayNumber + ".";
     setEnteredNumber(newEnteredNumber.toString());
-    setDisplayNumber(newDisplayNumber.toString());
   };
+
+  const convertToPercentHandler = () => {};
+
+  let displayNumber = Number(enteredNumber).toLocaleString(undefined, {
+    maximumFractionDigits: 8,
+  });
+  if (enteredNumber.at(-1) === ".") {
+    displayNumber += ".";
+  }
 
   return (
     <div className={classes.App}>
       <div className={classes["calc-container"]}>
         <div className={classes["screens-container"]}>
-          <div></div>
           <div>{displayNumber}</div>
         </div>
         <div className={classes["buttons-container"]}>
           <button onClick={clearHandler}>AC</button>
           <button onClick={toggleSignHandler}>+/-</button>
-          <button>%</button>
+          <button onClick={convertToPercentHandler}>%</button>
           <button>/</button>
           <button onClick={numberHandler}>7</button>
           <button onClick={numberHandler}>8</button>
